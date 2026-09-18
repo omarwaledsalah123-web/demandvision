@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>DemandVision AI</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="dvApp" style="min-height:100vh;display:grid;grid-template-columns:240px 1fr;gap:0;">
+    <aside id="sidebar" style="background:#09101f;border-right:1px solid #263352;padding:24px 16px;min-height:100vh;position:sticky;top:0;height:100vh;">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:34px;padding:0 8px;">
+        <div style="width:38px;height:38px;border:1px solid #67e8f9;border-radius:10px;display:grid;place-items:center;color:#67e8f9;font-weight:900;">DV</div>
+        <div>
+          <div style="font-weight:800;color:#eef2ff;">DemandVision</div>
+          <div style="font-size:10px;color:#7785a7;letter-spacing:1.5px;">AI INVENTORY</div>
+        </div>
+      </div>
+
+      <nav style="display:grid;gap:8px;">
+        <button class="dv-nav active" data-section="dashboard" style="all:unset;cursor:pointer;padding:12px 14px;border-radius:12px;color:#c9d3eb;font-size:14px;">◈ &nbsp; Dashboard</button>
+        <button class="dv-nav" data-section="prediction" style="all:unset;cursor:pointer;padding:12px 14px;border-radius:12px;color:#c9d3eb;font-size:14px;">✦ &nbsp; AI Prediction</button>
+        <button class="dv-nav" data-section="analytics" style="all:unset;cursor:pointer;padding:12px 14px;border-radius:12px;color:#c9d3eb;font-size:14px;">▥ &nbsp; Analytics</button>
+        <button class="dv-nav" data-section="dataset" style="all:unset;cursor:pointer;padding:12px 14px;border-radius:12px;color:#c9d3eb;font-size:14px;">▤ &nbsp; Dataset</button>
+      </nav>
+
+      <div style="position:absolute;bottom:24px;left:16px;right:16px;border:1px solid #263352;background:#0c1427;border-radius:14px;padding:12px;">
+        <div style="font-size:11px;color:#67e8f9;font-weight:800;">● MODEL ONLINE</div>
+        <div style="font-size:11px;color:#7785a7;margin-top:5px;">Random Forest Engine</div>
+      </div>
+    </aside>
+
+    <main style="padding:34px 34px 50px;min-width:0;">
+      <section id="dashboard" class="dv-section">
+        <div class="hero" style="margin-bottom:24px;">
+          <div>
+            <p class="eyebrow">PREDICT. ANALYZE. DECIDE.</p>
+            <h1>Demand<span>Vision</span></h1>
+            <p class="sub">AI-powered demand forecasting and inventory intelligence.</p>
+          </div>
+          <div class="badge">MODEL ONLINE</div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px;">
+          <div class="metric"><span>Dataset Rows</span><strong>—</strong></div>
+          <div class="metric"><span>Products</span><strong>—</strong></div>
+          <div class="metric"><span>Model R²</span><strong>0.9935</strong></div>
+          <div class="metric"><span>MAE</span><strong>7.56</strong></div>
+        </div>
+
+        <div class="card" style="margin-bottom:20px;">
+          <p class="eyebrow">PERFORMANCE SNAPSHOT</p>
+          <h2 style="margin:0 0 8px;">Model performance</h2>
+          <p style="color:#7785a7;margin-top:0;">Random Forest demand forecasting metrics from the trained model.</p>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:20px;">
+            <div class="metric"><span>RMSE</span><strong>8.83</strong></div>
+            <div class="metric"><span>Recommendation Engine</span><strong style="font-size:17px;">Inventory-aware</strong></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <p class="eyebrow">QUICK ACTION</p>
+          <h2 style="margin:0 0 8px;">Ready to forecast demand?</h2>
+          <p class="hint">Enter a Product ID and let the trained AI model generate a demand forecast and inventory recommendation.</p>
+          <button id="launchPrediction" style="margin-top:12px;border:0;border-radius:12px;padding:13px 18px;background:#67e8f9;color:#07101b;font-weight:800;cursor:pointer;">Launch AI Prediction →</button>
+        </div>
+      </section>
+
+      <section id="prediction" class="dv-section" style="display:none;">
+        <div class="hero" style="margin-bottom:24px;">
+          <div>
+            <p class="eyebrow">AI PREDICTION</p>
+            <h2 style="font-size:36px;margin:0;">Demand forecast</h2>
+            <p class="sub">Use the trained Random Forest model to predict product demand.</p>
+          </div>
+        </div>
+
+        <section class="card">
+          <label for="productId">Product ID</label>
+          <div class="search">
+            <input id="productId" placeholder="e.g. P0020" autocomplete="off">
+            <button id="predict">Predict</button>
+          </div>
+          <p class="hint">Enter a Product ID from the retail inventory dataset.</p>
+          <div id="message"></div>
+        </section>
+
+        <section id="result" class="result hidden">
+          <div class="result-head">
+            <div>
+              <p class="eyebrow">PREDICTION RESULT</p>
+              <h2 id="product"></h2>
+            </div>
+            <div id="recommendation" class="recommendation"></div>
+          </div>
+          <div class="grid">
+            <div class="metric"><span>AI Predicted Demand</span><strong id="predicted"></strong></div>
+            <div class="metric"><span>Actual Demand</span><strong id="actual"></strong></div>
+            <div class="metric"><span>Inventory Level</span><strong id="inventory"></strong></div>
+            <div class="metric"><span>Units Sold</span><strong id="sold"></strong></div>
+            <div class="metric"><span>Units Ordered</span><strong id="ordered"></strong></div>
+            <div class="metric"><span>Price</span><strong id="price"></strong></div>
+          </div>
+        </section>
+      </section>
+
+      <section id="analytics" class="dv-section" style="display:none;">
+        <div class="hero" style="margin-bottom:24px;">
+          <div>
+            <p class="eyebrow">DATA VISUALISATION</p>
+            <h2 style="font-size:36px;margin:0;">Demand intelligence</h2>
+            <p class="sub">Visual comparison of the latest prediction and inventory signals.</p>
+          </div>
+        </div>
+
+        <div class="card" style="margin-bottom:20px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;">
+            <div>
+              <p class="eyebrow">DEMAND PROFILE</p>
+              <h3 style="margin:0;">Actual vs predicted demand</h3>
+            </div>
+            <span id="analyticsProduct" class="recommendation">No prediction yet</span>
+          </div>
+          <div id="barChart" style="display:flex;gap:34px;align-items:stretch;height:280px;margin-top:28px;padding:20px 24px 0;border-bottom:1px solid #344366;">
+            <div class="dv-bar-wrap" data-key="actual" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;min-width:0;">
+              <strong id="chartActual" style="margin-bottom:8px;">—</strong>
+              <div class="dv-bar" style="width:70%;height:20%;min-height:12px;background:#67e8f9;border-radius:10px 10px 4px 4px;transition:height .7s ease;"></div>
+              <span style="margin-top:10px;">Actual</span>
+            </div>
+            <div class="dv-bar-wrap" data-key="predicted" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;min-width:0;">
+              <strong id="chartPredicted" style="margin-bottom:8px;">—</strong>
+              <div class="dv-bar" style="width:70%;height:20%;min-height:12px;background:#67e8f9;border-radius:10px 10px 4px 4px;transition:height .7s ease;"></div>
+              <span style="margin-top:10px;">Predicted</span>
+            </div>
+            <div class="dv-bar-wrap" data-key="inventory" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;min-width:0;">
+              <strong id="chartInventory" style="margin-bottom:8px;">—</strong>
+              <div class="dv-bar" style="width:70%;height:20%;min-height:12px;background:#67e8f9;border-radius:10px 10px 4px 4px;transition:height .7s ease;"></div>
+              <span style="margin-top:10px;">Inventory</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <p class="eyebrow">DECISION SIGNALS</p>
+          <h3 style="margin:0 0 16px;">Inventory indicators</h3>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;">
+            <div class="metric"><span>Demand Gap</span><strong id="gapSignal">—</strong></div>
+            <div class="metric"><span>Inventory Coverage</span><strong id="coverageSignal">—</strong></div>
+            <div class="metric"><span>Units Ordered</span><strong id="orderedSignal">—</strong></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="dataset" class="dv-section" style="display:none;">
+        <div class="hero" style="margin-bottom:24px;">
+          <div>
+            <p class="eyebrow">DATASET</p>
+            <h2 style="font-size:36px;margin:0;">Retail inventory data</h2>
+            <p class="sub">Fields used by the DemandVision forecasting pipeline.</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <p class="eyebrow">DATA FIELDS</p>
+          <div style="overflow:auto;">
+            <table style="width:100%;border-collapse:collapse;color:#c9d3eb;font-size:13px;">
+              <thead><tr>
+                <th style="text-align:left;padding:12px;border-bottom:1px solid #263352;">Field</th>
+                <th style="text-align:left;padding:12px;border-bottom:1px solid #263352;">Purpose</th>
+              </tr></thead>
+              <tbody id="datasetFields"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
